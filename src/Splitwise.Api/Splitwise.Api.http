@@ -1,0 +1,55 @@
+@Api = http://localhost:5080
+
+### 1. Register Alice
+POST {{Api}}/api/auth/register
+Content-Type: application/json
+
+{ "email": "alice@example.com", "password": "Password123", "displayName": "Alice" }
+
+### 2. Register Bob
+POST {{Api}}/api/auth/register
+Content-Type: application/json
+
+{ "email": "bob@example.com", "password": "Password123", "displayName": "Bob" }
+
+### 3. Login as Alice (copy the token into @Token below)
+POST {{Api}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "alice@example.com", "password": "Password123" }
+
+###
+@Token = PASTE_TOKEN_HERE
+
+### 4. Create a group with Bob
+POST {{Api}}/api/groups
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
+{ "name": "Trip to Lviv", "memberEmails": ["bob@example.com"] }
+
+### 5. My groups
+GET {{Api}}/api/groups
+Authorization: Bearer {{Token}}
+
+### 6. Group details (members and their ids)
+GET {{Api}}/api/groups/1
+Authorization: Bearer {{Token}}
+
+### 7. Add an equal-split expense (PaidByUserId = Alice's id from step 6)
+POST {{Api}}/api/groups/1/expenses
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
+{ "description": "Hotel", "amount": 100.00, "paidByUserId": "PASTE_ALICE_ID", "splitType": "Equal" }
+
+### 8. Balances
+GET {{Api}}/api/groups/1/balances
+Authorization: Bearer {{Token}}
+
+### 9. Settle up (Bob pays Alice - log in as Bob first and use his token)
+POST {{Api}}/api/groups/1/settlements
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
+{ "toUserId": "PASTE_ALICE_ID", "amount": 50.00 }

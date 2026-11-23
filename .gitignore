@@ -1,0 +1,23 @@
+## Visual Studio / VS Code / JetBrains Rider
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## SQLite Database
+*.db
+*.db-shm
+*.db-wal
+
+## OS generated files
+.DS_Store
+Thumbs.db
